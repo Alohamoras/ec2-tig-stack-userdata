@@ -82,7 +82,7 @@ INSTANCE_ID=$(aws ec2 run-instances \
     --key-name $KEY_NAME \
     --security-group-ids $SECURITY_GROUP_ID \
     --subnet-id $SUBNET_ID \
-    --user-data file://user-data-c5-4xlarge.sh \
+    --user-data file://user-data-self-contained.sh \
     --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=TIG-Stack-Testing-c5.4xlarge},{Key=Purpose,Value=TIG-Stack-Testing},{Key=Environment,Value=Testing}]' \
     --associate-public-ip-address \
     --query 'Instances[0].InstanceId' \

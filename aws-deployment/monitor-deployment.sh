@@ -65,8 +65,8 @@ monitor_deployment() {
     # Check containers
     run_ssh_command "docker ps --format 'table {{.Names}}\t{{.Status}}\t{{.Ports}}' 2>/dev/null || echo 'Docker containers not running yet'" "Container Status:"
     
-    # Check system resources
-    run_ssh_command "echo 'CPU: '$(top -bn1 | grep 'Cpu(s)' | awk '{print \$2}' | cut -d'%' -f1)'%' && echo 'Memory: '$(free -h | grep '^Mem:' | awk '{print \$3\"/\"\$2}') && echo 'Disk: '$(df -h / | tail -1 | awk '{print \$3\"/\"\$2\" (\"\$5\")\"}') 2>/dev/null || echo 'System info not available'" "System Resources:"
+    # Check system resources (simplified to avoid awk issues)
+    run_ssh_command "echo 'Memory Usage:'; free -h | grep '^Mem:' || echo 'Memory info not available'; echo 'Disk Usage:'; df -h / | tail -1 || echo 'Disk info not available'; echo 'Load Average:'; uptime || echo 'Load info not available'" "System Resources:"
     
     # Check deployment completion
     run_ssh_command "cat /tmp/tig-deployment-complete.txt 2>/dev/null || echo 'Deployment not completed yet'" "Deployment Completion Status:"

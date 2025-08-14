@@ -1,15 +1,15 @@
-Instance ID: i-0df14a571d162f68a
+Instance ID: i-08e8f5d589576410c
 Instance Type: c5.4xlarge
-Public IP: 35.175.108.19
-Private IP: 172.31.2.147
+Public IP: 3.221.127.219
+Private IP: 172.31.6.204
 Region: us-east-1
-Security Group: sg-071dd9c5148ef00e3
-CloudFormation Stack: tig-stack-testing-sg-1755186252
-Launch Time: Thu Aug 14 11:45:03 EDT 2025
+Security Group: sg-02a897d6f9550ecaf
+CloudFormation Stack: tig-stack-testing-sg-1755189619
+Launch Time: Thu Aug 14 12:41:10 EDT 2025
 
-SSH Command: ssh -i IAD-Key.pem ec2-user@35.175.108.19
-Grafana URL: http://35.175.108.19:3000
-InfluxDB URL: http://35.175.108.19:8086
+SSH Command: ssh -i IAD-Key.pem ec2-user@3.221.127.219
+Grafana URL: http://3.221.127.219:3000
+InfluxDB URL: http://3.221.127.219:8086
 
 Monitoring Commands:
 - tail -f /var/log/tig-stack-install.log
