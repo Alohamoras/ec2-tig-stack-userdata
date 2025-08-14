@@ -33,10 +33,14 @@ Thumbs.db
 /data/
 /volumes/
 
-# AWS credentials (should never be committed)
+# AWS credentials and keys (should never be committed)
 .aws/
 credentials
 config
+*.pem
+*.key
+aws-deployment/*.pem
+aws-deployment/*.key
 
 # Backup files
 *.bak

@@ -10,20 +10,35 @@ This directory contains scripts and templates for testing the TIG Stack on a c5.
 
 ## Quick Start
 
-### 1. Configure the Scripts
+### 1. Run Setup Script (Recommended)
 
-Edit the following variables in `launch-instance.sh`:
+```bash
+cd aws-deployment
+./setup.sh
+```
+
+This will:
+- Verify your AWS CLI configuration
+- Configure your EC2 key pair name
+- Set your preferred AWS region
+- Guide you through key file placement options
+
+### 2. Manual Configuration (Alternative)
+
+If you prefer manual setup, edit these variables:
+
+In `launch-instance.sh`:
 ```bash
 KEY_NAME="your-key-pair-name"  # Replace with your key pair name
 REGION="us-east-1"             # Change to your preferred region
 ```
 
-Edit the same variable in `monitor-deployment.sh`:
+In `monitor-deployment.sh`:
 ```bash
 KEY_NAME="your-key-pair-name"  # Replace with your key pair name
 ```
 
-### 2. Launch the Instance
+### 3. Launch the Instance
 
 ```bash
 chmod +x *.sh
@@ -35,7 +50,7 @@ This will:
 - Launch a c5.4xlarge instance with optimized user data
 - Display access information
 
-### 3. Monitor the Deployment
+### 4. Monitor the Deployment
 
 ```bash
 ./monitor-deployment.sh
@@ -47,14 +62,14 @@ Choose from:
 3. Show access information only
 4. Check installation logs
 
-### 4. Access Your TIG Stack
+### 5. Access Your TIG Stack
 
 Once deployment is complete (3-5 minutes):
 - **Grafana**: http://YOUR-INSTANCE-IP:3000
 - **Username**: admin
 - **Password**: Check `/opt/tig-stack/.env` on the instance
 
-### 5. Clean Up Resources
+### 6. Clean Up Resources
 
 ```bash
 ./cleanup.sh
@@ -66,11 +81,38 @@ This will terminate the instance and delete all created AWS resources.
 
 | File | Purpose |
 |------|---------|
+| `setup.sh` | Interactive setup script (recommended) |
 | `security-group.yaml` | CloudFormation template for security group |
 | `user-data-c5-4xlarge.sh` | Optimized user data script for large instance |
 | `launch-instance.sh` | Main script to launch and configure instance |
 | `monitor-deployment.sh` | Monitor deployment progress and status |
 | `cleanup.sh` | Clean up all created AWS resources |
+
+## Key File Placement Options
+
+You have three options for your EC2 key pair file:
+
+### Option 1: aws-deployment directory (Recommended)
+```bash
+# Copy your key file to the deployment directory
+cp ~/Downloads/your-key.pem ./aws-deployment/
+chmod 400 ./aws-deployment/your-key.pem
+```
+
+### Option 2: ~/.ssh directory
+```bash
+# Place in your SSH directory
+cp ~/Downloads/your-key.pem ~/.ssh/
+chmod 400 ~/.ssh/your-key.pem
+```
+
+### Option 3: Any location with absolute path
+```bash
+# Keep anywhere and update scripts with full path
+# The setup script will handle this for you
+```
+
+**Security Note**: Key files are automatically excluded from git commits via `.gitignore`.
 
 ## Instance Specifications
 
