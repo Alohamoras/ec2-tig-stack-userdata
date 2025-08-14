@@ -27,7 +27,10 @@ echo "Instance ID: $(curl -s http://169.254.169.254/latest/meta-data/instance-id
 echo "Public IP: $(curl -s http://169.254.169.254/latest/meta-data/public-ipv4)" >> /tmp/tig-deployment-start.txt
 
 # Download and execute the TIG stack installation script
-curl -sSL https://raw.githubusercontent.com/Alohamoras/ec2-tig-stack-userdata/main/user-data.sh | bash
+# Fix the BASH_SOURCE issue for cloud-init compatibility
+curl -sSL https://raw.githubusercontent.com/Alohamoras/ec2-tig-stack-userdata/main/user-data.sh | \
+sed 's/if \[\[ "${BASH_SOURCE\[0\]}" == "${0}" \]\]; then/# Cloud-init compatibility - always execute main/' | \
+sed 's/fi$/# End cloud-init compatibility fix/' | bash
 
 # Post-installation validation and reporting
 cat << 'EOF' > /tmp/post-install-check.sh

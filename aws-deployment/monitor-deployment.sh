@@ -20,7 +20,7 @@ fi
 # Extract instance details
 PUBLIC_IP=$(grep "Public IP:" instance-details.txt | cut -d' ' -f3)
 INSTANCE_ID=$(grep "Instance ID:" instance-details.txt | cut -d' ' -f3)
-KEY_NAME="IAD-key"  # Replace with your key pair name
+KEY_NAME="IAD-Key"  # Replace with your key pair name
 
 echo -e "${GREEN}=== TIG Stack Deployment Monitor ===${NC}"
 echo -e "Instance ID: ${BLUE}$INSTANCE_ID${NC}"

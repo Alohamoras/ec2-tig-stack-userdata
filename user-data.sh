@@ -1515,7 +1515,8 @@ main() {
 }
 
 # Execute main function if script is run directly
-if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+# Cloud-init compatibility: BASH_SOURCE may not be available
+if [[ "${BASH_SOURCE[0]:-}" == "${0}" ]] || [[ -z "${BASH_SOURCE[0]:-}" ]]; then
     main "$@"
 fi
 

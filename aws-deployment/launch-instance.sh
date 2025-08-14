@@ -7,7 +7,7 @@ set -e
 
 # Configuration
 INSTANCE_TYPE="c5.4xlarge"
-KEY_NAME="your-key-pair-name"  # Replace with your key pair name
+KEY_NAME="IAD-Key"  # Replace with your key pair name
 SECURITY_GROUP_NAME="tig-stack-testing-sg"
 REGION="us-east-1"  # Change to your preferred region
 
