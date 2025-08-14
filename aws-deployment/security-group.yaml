@@ -1,0 +1,74 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'Security Group for TIG Stack Testing on c5.4xlarge'
+
+Parameters:
+  YourCurrentIP:
+    Type: String
+    Default: '108.31.99.41/32'
+    Description: Your current IP address for Grafana access
+    
+  VpcId:
+    Type: AWS::EC2::VPC::Id
+    Description: VPC ID where the security group will be created
+    
+Resources:
+  TigStackSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupName: tig-stack-testing-sg
+      GroupDescription: Security group for TIG Stack testing on large instance
+      VpcId: !Ref VpcId
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: !Ref YourCurrentIP
+          Description: SSH access for troubleshooting
+        - IpProtocol: tcp
+          FromPort: 3000
+          ToPort: 3000
+          CidrIp: !Ref YourCurrentIP
+          Description: Grafana web interface
+        - IpProtocol: tcp
+          FromPort: 8086
+          ToPort: 8086
+          CidrIp: !Ref YourCurrentIP
+          Description: InfluxDB API (testing only)
+      SecurityGroupEgress:
+        - IpProtocol: tcp
+          FromPort: 443
+          ToPort: 443
+          CidrIp: 0.0.0.0/0
+          Description: HTTPS outbound for package downloads
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: 0.0.0.0/0
+          Description: HTTP outbound for package downloads
+        - IpProtocol: udp
+          FromPort: 53
+          ToPort: 53
+          CidrIp: 0.0.0.0/0
+          Description: DNS resolution
+      Tags:
+        - Key: Name
+          Value: tig-stack-testing-sg
+        - Key: Purpose
+          Value: TIG-Stack-Testing
+        - Key: Environment
+          Value: Testing
+
+Outputs:
+  SecurityGroupId:
+    Description: Security Group ID for TIG Stack Testing
+    Value: !Ref TigStackSecurityGroup
+    Export:
+      Name: !Sub '${AWS::StackName}-SecurityGroupId'
+      
+  GrafanaURL:
+    Description: Grafana access URL (replace INSTANCE-IP)
+    Value: 'http://INSTANCE-IP:3000'
+    
+  SSHCommand:
+    Description: SSH command to connect to instance
+    Value: !Sub 'ssh -i your-key.pem ec2-user@INSTANCE-IP'
