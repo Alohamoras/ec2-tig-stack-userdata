@@ -285,7 +285,6 @@ services:
             - HOST_PROC=/hostfs/proc
             - HOST_SYS=/hostfs/sys
             - HOST_ETC=/hostfs/etc
-        environment:
             - TELEGRAF_HOSTNAME=${TELEGRAF_HOSTNAME}
             - INFLUXDB_DATABASE=${INFLUXDB_DATABASE}
             - INFLUXDB_ADMIN_USER=${INFLUXDB_ADMIN_USER}
